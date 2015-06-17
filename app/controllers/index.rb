@@ -49,9 +49,9 @@ get "/game_test" do
   erb :game_test
 end
 
-get "/test_game" do
+get "/game" do
   @user_id = 1
-  erb :test_game
+  erb :game
 end
 
 post "/next_player" do
