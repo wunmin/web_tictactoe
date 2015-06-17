@@ -38,6 +38,7 @@ get "/games/:game_id" do
   @game = Game.find(params[:game_id])
   @player1 = User.find(@game.player1_id)
   @player2 = User.find(@game.player2_id)
+  erb :game
 end
 
 get "/users/:user_id" do
@@ -54,12 +55,46 @@ get "/test_game" do
 end
 
 post "/next_player" do
-
   redirect to "/game_test"
 end
 
 
-get "games/:game_id/state" do
+get "/games/:game_id/state" do
   game = Game.find(params[:game_id])
   @moves = game.moves
+end
+
+post "/games/:game_id/move" do
+  game = Game.find(params[:game_id])
+  player_id = session[id]
+
+  if player_id == game.player1_id
+    symbol = "O"
+  else
+    symbol = "X"
+  end
+
+  Move.create(
+    game_id: game.id,
+    square: params[:square],
+    symbol: symbol
+    )
+
+  if game.hasEnded == false
+    if game.moves.last.symbol == "O"
+      {
+        has_ended: false,
+        next_player: 0
+      }
+    else
+      {
+        has_ended: false,
+        next_player: 1
+      }
+    end
+  else
+    {
+      has_ended: true
+    }
+  end
 end
