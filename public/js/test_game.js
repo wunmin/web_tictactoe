@@ -77,11 +77,13 @@ $(document).ready(function() {
     var playerNum = document.getElementById("player").getAttribute('value');
     var identifier = $(this).attr("id");
 
-    if (playerNum === "0"){
+    if (playerNum === "1"){
       $("#" + identifier).append("<div id=\"circle\"></div>");
+      $("#" + identifier).unbind("click");
     }
     else {
-      $("#" + identifier).append("<div id=\"cross\">X</div>");
+      $("#" + identifier).append("<div id=\"cross\">x</div>");
+      $("#" + identifier).unbind("click");
     }
 
 
